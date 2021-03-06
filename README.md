@@ -57,6 +57,6 @@ bin/build.sh
 ## 👷‍ Contribution
 Please help with code, love, shares, feedback and bug reporting.
 
-## ⚖️ Licence
+## ⚖️ License
 This plugin is licensed under the MIT licence.
 
