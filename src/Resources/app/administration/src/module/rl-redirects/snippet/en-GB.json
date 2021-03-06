@@ -1,0 +1,26 @@
+{
+	"rl-redirects": {
+		"general": {
+			"title": "Redirects"
+		},
+		"list": {
+			"columnSourceUrl": "Source URL",
+			"columnTargetUrl": "Target URL",
+			"columnHttpCode": "Http Code",
+			"createButton": "Add Redirect"
+		},
+		"detail": {
+			"sourceUrlLabel": "Source URL",
+			"targetUrlLabel": "Target URL",
+			"httpCodeLabel": "Http Code",
+			"cancelButton": "Cancel",
+			"saveButton": "Save",
+			"errorTitle": "Error",
+            "errorSameUrlDescription": "The source URL and target URL must not be the same",
+			"httpCodeLabelValues": {
+				"301": "301 (Moved Permanently)",
+				"302": "302 (Found / Moved Temporarily)"
+			}
+		}
+	}
+}

@@ -1,0 +1,22 @@
+{% block rl_redirects_list %}
+	<sw-page class="rl-redirects-list">
+		<template slot="smart-bar-actions">
+			{% block rl_redirects_list_smarbar %}
+				<sw-button variant="primary" :routerLink="{name: 'rl.redirects.create'}">
+					{{ $t('rl-redirects.list.createButton') }}
+				</sw-button>
+			{% endblock %}
+		</template>
+		<template slot="content">
+			{% block rl_redirects_list_content %}
+				<sw-entity-listing
+					v-if="redirects"
+					:items="redirects"
+					:repository="redirectRepository"
+					:columns="columns"
+					detailRoute="rl.redirect.details">
+				</sw-entity-listing>
+			{% endblock %}
+		</template>
+	</sw-page>
+{% endblock %}

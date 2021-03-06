@@ -1,0 +1,26 @@
+{
+	"rl-redirects": {
+		"general": {
+			"title": "Weiterleitungen"
+		},
+		"list": {
+			"columnSourceUrl": "Quell URL",
+			"columnTargetUrl": "Ziel URL",
+			"columnHttpCode": "Http Code",
+			"createButton": "Weiterleitung anlegen"
+		},
+		"detail": {
+			"sourceUrlLabel": "Quell URL",
+			"targetUrlLabel": "Ziel URL",
+			"httpCodeLabel": "Http Code",
+			"cancelButton": "Abbrechen",
+			"saveButton": "Speichern",
+			"errorTitle": "Fehler",
+            "errorSameUrlDescription": "Die Quell URL und Ziel URL dürfen nicht gleich sein",
+			"httpCodeLabelValues": {
+				"301": "301 (Permanent verschoben)",
+				"302": "302 (Gefunden / Temporär verschoben)"
+			}
+		}
+	}
+}

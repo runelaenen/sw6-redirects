@@ -1,0 +1,32 @@
+{
+    "name": "runelaenen/sw6-redirects",
+    "description": "Redirect plugin for Shopware 6",
+    "version": "1.0.0",
+    "type": "shopware-platform-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rune Laenen",
+            "email": "rune@laenen.me",
+            "homepage": "https://laenen.me"
+        }
+    ],
+    "require": {
+        "php": "^7.4 || 8.0"
+    },
+    "extra": {
+        "shopware-plugin-class": "RuneLaenen\\Redirects\\RuneLaenenRedirects",
+        "label": {
+            "de-DE": "Redirect Plugin",
+            "en-GB": "Redirect plugin"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "RuneLaenen\\Redirects\\": "src/"
+        }
+    },
+    "require-dev": {
+        "phpro/grumphp-shim": "^1.3"
+    }
+}
