@@ -18,6 +18,7 @@ Are you a happy user of the Redirects plugin? Please consider giving our project
 ## ✔️ Features
 - 301 redirects
 - 302 (temporary) redirects
+- Import/Export profile
 
 ## 🚀 How to install
 ### Composer install (recommended)
