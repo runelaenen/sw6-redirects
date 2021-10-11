@@ -9,13 +9,19 @@ class RedirectEntity extends Entity
 {
     use EntityIdTrait;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $source;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $target;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     protected $httpCode;
 
     public function getSource(): string

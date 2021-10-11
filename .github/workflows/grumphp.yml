@@ -2,8 +2,13 @@ on: [push]
 
 jobs:
     build:
-        name: GrumPHP
+        name: GrumPHP on (PHP ${{ matrix.php-versions }} on ${{ matrix.operating-system }})
         runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                operating-system: [ ubuntu-latest, windows-latest, macos-latest ]
+                php-versions: [ '7.3', '7.4' ]
         env:
             extensions: intl, mbstring
         steps:
@@ -11,9 +16,9 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: '7.4'
+                  php-version: ${{ matrix.php-versions }}
                   extensions: ${{ env.extensions }}
-                  tools: composer
+                  tools: composer:v2
             - name: Get Composer Cache Directory
               id: composercache
               run: echo "::set-output name=dir::$(composer config cache-files-dir)"
@@ -24,5 +29,7 @@ jobs:
                   key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
                   restore-keys: ${{ runner.os }}-composer-
             - name: Install dependencies
-              run: composer install --prefer-dist
+              run: |
+                composer install --prefer-dist
+                npm install --prefix vendor/shopware/platform/src/Administration/Resources/app/administration
             - run: ./vendor/bin/grumphp run
