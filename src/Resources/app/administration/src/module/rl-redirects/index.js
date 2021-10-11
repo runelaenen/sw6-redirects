@@ -13,7 +13,7 @@ Shopware.Module.register('rl-redirects', {
     routes: {
         list: {
             component: 'rl-redirects-list',
-            path: 'list'
+            path: 'list',
         },
         details: {
             component: 'rl-redirects-details',
@@ -21,26 +21,26 @@ Shopware.Module.register('rl-redirects', {
             props: {
                 default: (route) => {
                     return {
-                        redirectId: route.params.id
+                        redirectId: route.params.id,
                     };
-                }
+                },
             },
             meta: {
-                parentPath: 'rl.redirects.list'
-            }
+                parentPath: 'rl.redirects.list',
+            },
         },
         create: {
             component: 'rl-redirects-create',
             path: 'create',
             meta: {
-                parentPath: 'rl.redirects.list'
-            }
-        }
+                parentPath: 'rl.redirects.list',
+            },
+        },
     },
 
     settingsItem: [{
         to: 'rl.redirects.list',
         group: 'shop',
-        icon: 'small-arrow-large-double-right'
-    }]
+        icon: 'small-arrow-large-double-right',
+    }],
 });

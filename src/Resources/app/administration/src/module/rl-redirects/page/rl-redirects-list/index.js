@@ -7,18 +7,18 @@ Component.register('rl-redirects-list', {
     template,
 
     inject: [
-        'repositoryFactory'
+        'repositoryFactory',
     ],
 
     data() {
         return {
-            redirects: null
+            redirects: null,
         };
     },
 
     metaInfo() {
         return {
-            title: this.$createTitle()
+            title: this.$createTitle(),
         };
     },
 
@@ -31,29 +31,29 @@ Component.register('rl-redirects-list', {
                 routerLink: 'rl.redirects.details',
                 inlineEdit: 'string',
                 allowResize: true,
-                primary: true
+                primary: true,
             }, {
                 property: 'target',
                 dataIndex: 'target',
                 label: this.$tc('rl-redirects.list.columnTargetUrl'),
                 inlineEdit: 'string',
-                allowResize: true
+                allowResize: true,
             }, {
                 property: 'httpCode',
                 dataIndex: 'httpCode',
                 label: this.$tc('rl-redirects.list.columnHttpCode'),
-                allowResize: true
+                allowResize: true,
             }];
         },
         redirectRepository() {
             return this.repositoryFactory.create('rl_redirects_redirect');
-        }
+        },
     },
 
     created() {
         this.redirectRepository.search(new Criteria(), Shopware.Context.api).then((result) => {
             this.redirects = result;
         });
-    }
+    },
 
 });

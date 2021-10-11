@@ -13,7 +13,7 @@ Component.extend('rl-redirects-create', 'rl-redirects-details', {
             if (this.redirect.source === this.redirect.target) {
                 this.createNotificationError({
                     title: this.$tc('rl-redirects.detail.errorTitle'),
-                    message: this.$tc('rl-redirects.detail.errorSameUrlDescription')
+                    message: this.$tc('rl-redirects.detail.errorSameUrlDescription'),
                 });
                 return;
             }
@@ -26,10 +26,10 @@ Component.extend('rl-redirects-create', 'rl-redirects-details', {
                 this.isLoading = false;
                 this.createNotificationError({
                     title: this.$tc('rl-redirects.detail.errorTitle'),
-                    message: exception
+                    message: exception,
                 });
             });
-        }
-    }
+        },
+    },
 
 });
