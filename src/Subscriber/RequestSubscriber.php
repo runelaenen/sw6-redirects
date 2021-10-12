@@ -32,7 +32,7 @@ class RequestSubscriber implements EventSubscriberInterface
     {
         return [
             BeforeSendResponseEvent::class => 'redirectBeforeSendResponse',
-            BeforeSendRedirectResponseEvent::class => 'redirectBeforeRedirectResponse'
+            BeforeSendRedirectResponseEvent::class => 'redirectBeforeRedirectResponse',
         ];
     }
 

@@ -6,39 +6,39 @@ Component.register('rl-redirects-details', {
     template,
 
     inject: [
-        'repositoryFactory'
+        'repositoryFactory',
     ],
 
     mixins: [
-        Mixin.getByName('notification')
+        Mixin.getByName('notification'),
     ],
 
     props: {
         redirectId: {
             type: String,
             required: false,
-            default: null
-        }
-    },
-
-    metaInfo() {
-        return {
-            title: this.$createTitle()
-        };
+            default: null,
+        },
     },
 
     data() {
         return {
             redirect: null,
             isLoading: true,
-            processSuccess: false
+            processSuccess: false,
+        };
+    },
+
+    metaInfo() {
+        return {
+            title: this.$createTitle(),
         };
     },
 
     computed: {
         redirectRepository() {
             return this.repositoryFactory.create('rl_redirects_redirect');
-        }
+        },
     },
 
     created() {
@@ -50,7 +50,7 @@ Component.register('rl-redirects-details', {
             this.isLoading = true;
             this.redirectRepository.get(
                 this.redirectId,
-                Shopware.Context.api
+                Shopware.Context.api,
             ).then((entity) => {
                 this.redirect = entity;
                 this.isLoading = false;
@@ -61,7 +61,7 @@ Component.register('rl-redirects-details', {
             if (this.redirect.source === this.redirect.target) {
                 this.createNotificationError({
                     title: this.$tc('rl-redirects.detail.errorTitle'),
-                    message: this.$tc('rl-redirects.detail.errorSameUrlDescription')
+                    message: this.$tc('rl-redirects.detail.errorSameUrlDescription'),
                 });
                 return;
             }
@@ -77,14 +77,14 @@ Component.register('rl-redirects-details', {
 
                 this.createNotificationError({
                     title: this.$tc('rl-redirects.detail.errorTitle'),
-                    message: exception
+                    message: exception,
                 });
             });
         },
 
         saveFinish() {
             this.processSuccess = false;
-        }
-    }
+        },
+    },
 
 });
