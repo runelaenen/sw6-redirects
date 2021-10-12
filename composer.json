@@ -1,7 +1,7 @@
 {
     "name": "runelaenen/sw6-redirects",
     "description": "Redirect plugin for Shopware 6",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "type": "shopware-platform-plugin",
     "license": "MIT",
     "authors": [
