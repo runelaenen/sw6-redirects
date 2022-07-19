@@ -3,12 +3,15 @@
 namespace RuneLaenen\Redirects\Subscriber;
 
 use RuneLaenen\Redirects\Content\Redirect\RedirectEntity;
+use Shopware\Core\Framework\Adapter\Cache\CacheCompressor;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\FieldSerializer\JsonFieldSerializer;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
 use Shopware\Core\Framework\Event\BeforeSendRedirectResponseEvent;
 use Shopware\Core\Framework\Event\BeforeSendResponseEvent;
+use Symfony\Component\Cache\Adapter\TagAwareAdapterInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,16 +19,22 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RequestSubscriber implements EventSubscriberInterface
 {
+    private const TAG_KEY = 'rl_redirects_cache';
+
     private EntityRepositoryInterface $redirectRepository;
 
     private EntityRepositoryInterface $seoUrlRepository;
 
+    private TagAwareAdapterInterface $cache;
+
     public function __construct(
         EntityRepositoryInterface $redirectRepository,
-        EntityRepositoryInterface $seoUrlRepository
+        EntityRepositoryInterface $seoUrlRepository,
+        TagAwareAdapterInterface $cache
     ) {
         $this->redirectRepository = $redirectRepository;
         $this->seoUrlRepository = $seoUrlRepository;
+        $this->cache = $cache;
     }
 
     public static function getSubscribedEvents(): array
@@ -38,7 +47,7 @@ class RequestSubscriber implements EventSubscriberInterface
 
     public function redirectBeforeSendResponse(BeforeSendResponseEvent $event): void
     {
-        $response = $this->handleRequest($event->getRequest());
+        $response = $this->handleRequestCached($event->getRequest());
         if (!$response) {
             return;
         }
@@ -49,13 +58,39 @@ class RequestSubscriber implements EventSubscriberInterface
     public function redirectBeforeRedirectResponse(BeforeSendRedirectResponseEvent $event): void
     {
         $requestUri = trim($event->getRequest()->getPathInfo(), '/');
-        $response = $this->handleRequest($event->getRequest(), $requestUri);
+        $response = $this->handleRequestCached($event->getRequest(), $requestUri);
 
         if (!$response) {
             return;
         }
 
         $event->setResponse($response);
+    }
+
+    private function handleRequestCached(Request $request, ?string $requestUri = null): ?Response
+    {
+        $cacheKey = md5(JsonFieldSerializer::encodeJson([
+            $requestUri ?? (string) $request->get('resolved-uri'),
+            $request->get('sw-storefront-url'),
+            $request->getBaseUrl(),
+        ]));
+
+        $item = $this->cache->getItem($cacheKey);
+        if (!$item->isHit() || $item->get() === null) {
+            $response = $this->handleRequest($request, $requestUri);
+
+            $item->expiresAfter(86400);
+
+            $item = CacheCompressor::compress($item, $response);
+
+            $item->tag(self::TAG_KEY);
+
+            $this->cache->save($item);
+
+            return $response;
+        }
+
+        return CacheCompressor::uncompress($item);
     }
 
     private function handleRequest(Request $request, ?string $requestUri = null): ?Response
