@@ -5,12 +5,12 @@ namespace RuneLaenen\Redirects\Subscriber;
 use RuneLaenen\Redirects\Content\Redirect\RedirectEntity;
 use Shopware\Core\Framework\Adapter\Cache\CacheCompressor;
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
-use Shopware\Core\Framework\DataAbstractionLayer\FieldSerializer\JsonFieldSerializer;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
 use Shopware\Core\Framework\Event\BeforeSendRedirectResponseEvent;
 use Shopware\Core\Framework\Event\BeforeSendResponseEvent;
+use Shopware\Core\Framework\Util\Json;
 use Symfony\Component\Cache\Adapter\TagAwareAdapterInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -21,15 +21,15 @@ class RequestSubscriber implements EventSubscriberInterface
 {
     private const TAG_KEY = 'rl_redirects_cache';
 
-    private EntityRepositoryInterface $redirectRepository;
+    private EntityRepository $redirectRepository;
 
-    private EntityRepositoryInterface $seoUrlRepository;
+    private EntityRepository $seoUrlRepository;
 
     private TagAwareAdapterInterface $cache;
 
     public function __construct(
-        EntityRepositoryInterface $redirectRepository,
-        EntityRepositoryInterface $seoUrlRepository,
+        EntityRepository $redirectRepository,
+        EntityRepository $seoUrlRepository,
         TagAwareAdapterInterface $cache
     ) {
         $this->redirectRepository = $redirectRepository;
@@ -69,7 +69,7 @@ class RequestSubscriber implements EventSubscriberInterface
 
     private function handleRequestCached(Request $request, ?string $requestUri = null): ?Response
     {
-        $cacheKey = md5(JsonFieldSerializer::encodeJson([
+        $cacheKey = md5(Json::encode([
             $requestUri ?? (string) $request->get('resolved-uri'),
             $request->get('sw-storefront-url'),
             $request->getBaseUrl(),

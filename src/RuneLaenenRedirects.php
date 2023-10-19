@@ -18,6 +18,6 @@ class RuneLaenenRedirects extends Plugin
 
         /** @var Connection $connection */
         $connection = $this->container->get(Connection::class);
-        $connection->executeUpdate('DROP TABLE IF EXISTS `rl_redirects_redirect`;');
+        $connection->executeStatement('DROP TABLE IF EXISTS `rl_redirects_redirect`;');
     }
 }

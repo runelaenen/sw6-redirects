@@ -1,9 +1,8 @@
 import template from './rl-redirects-list.html.twig';
 
-const { Component } = Shopware;
 const Criteria = Shopware.Data.Criteria;
 
-Component.register('rl-redirects-list', {
+export default {
     template,
 
     inject: [
@@ -56,4 +55,4 @@ Component.register('rl-redirects-list', {
         });
     },
 
-});
+};
