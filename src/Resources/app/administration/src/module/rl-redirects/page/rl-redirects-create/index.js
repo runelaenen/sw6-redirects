@@ -1,6 +1,4 @@
-const { Component } = Shopware;
-
-Component.extend('rl-redirects-create', 'rl-redirects-details', {
+export default {
     methods: {
         getRedirect() {
             this.redirect = this.redirectRepository.create(Shopware.Context.api);
@@ -32,4 +30,4 @@ Component.extend('rl-redirects-create', 'rl-redirects-details', {
         },
     },
 
-});
+};

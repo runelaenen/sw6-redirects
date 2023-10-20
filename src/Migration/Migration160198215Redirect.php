@@ -14,7 +14,7 @@ class Migration160198215Redirect extends MigrationStep
 
     public function update(Connection $connection): void
     {
-        $connection->executeUpdate(
+        $connection->executeStatement(
             <<<SQL
         CREATE TABLE IF NOT EXISTS `rl_redirects_redirect` (
         `id` BINARY(16) NOT NULL,

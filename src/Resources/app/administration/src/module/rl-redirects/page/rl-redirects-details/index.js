@@ -1,8 +1,8 @@
 import template from './rl-redirects-details.html.twig';
 
-const { Component, Mixin } = Shopware;
+const { Mixin } = Shopware;
 
-Component.register('rl-redirects-details', {
+export default {
     template,
 
     inject: [
@@ -87,4 +87,4 @@ Component.register('rl-redirects-details', {
         },
     },
 
-});
+};
